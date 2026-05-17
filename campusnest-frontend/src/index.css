@@ -1,0 +1,473 @@
+/* ============================================
+   CampusNest — Midnight & Rust Design System
+   Serious editorial, ivory paper + deep midnight + rust copper
+   ============================================ */
+
+:root,
+:root[data-theme="light"] {
+  /* Color palette: Midnight & Rust — Light mode */
+  --bg:            #f5efe0;
+  --bg-alt:        #fbf7eb;
+  --bg-deep:       #ebe3d0;
+
+  --ink:           #111111;
+  --ink-muted:     #555049;
+  --ink-faint:     #8a847b;
+
+  --accent:        #1c2541;
+  --accent-deep:   #131a30;
+  --accent-soft:   #e6e8ef;
+  --accent-ink:    #f5efe0;
+
+  --highlight:     #b8633e;
+  --highlight-deep:#9a5132;
+  --highlight-soft:#f3e3d8;
+
+  --danger:        #9a3838;
+  --danger-soft:   #f0dede;
+  --warning:       #b8633e;
+  --warning-soft:  #f3e3d8;
+  --success:       #2d5a3e;
+  --success-soft:  #e3ece5;
+
+  --line:          #d8d0bd;
+  --line-strong:   #b5ad97;
+
+  /* Nav & footer use their own token so they don't share the
+     primary "action" color (lets us go even darker in dark mode) */
+  --nav-bg:        #1c2541;
+  --nav-text:      #f5efe0;
+  --nav-line:      rgba(245, 239, 224, 0.15);
+
+  /* Focus ring + body glow get their own tokens to handle alpha */
+  --focus-ring:    rgba(28, 37, 65, 0.08);
+  --body-glow-1:   rgba(28, 37, 65, 0.03);
+  --body-glow-2:   rgba(184, 99, 62, 0.025);
+
+  /* Typography */
+  --font-display:  "Fraunces", "Georgia", serif;
+  --font-body:     "Public Sans", "Helvetica Neue", system-ui, sans-serif;
+
+  /* Spatial scale */
+  --radius:        6px;
+  --radius-card:   10px;
+  --space:         8px;
+}
+
+:root[data-theme="dark"] {
+  /* Color palette: Midnight & Rust — Dark mode */
+  --bg:            #14171f;
+  --bg-alt:        #1c2230;
+  --bg-deep:       #262b3a;
+
+  --ink:           #ede5d3;
+  --ink-muted:     #a39e8e;
+  --ink-faint:     #6e6a5d;
+
+  /* In dark mode the "action" color flips to a warm cream
+     so primary buttons stand out on the dark bg. */
+  --accent:        #ede5d3;
+  --accent-deep:   #d4cab5;
+  --accent-soft:   #2a3140;
+  --accent-ink:    #14171f;
+
+  /* Rust slightly brighter on dark to compensate for perceived loss */
+  --highlight:     #d96d40;
+  --highlight-deep:#b8633e;
+  --highlight-soft:#3a2419;
+
+  --danger:        #c44545;
+  --danger-soft:   #2a1a1a;
+  --warning:       #d96d40;
+  --warning-soft:  #2a1f1a;
+  --success:       #6a9a7a;
+  --success-soft:  #1a2a1f;
+
+  --line:          #2c3142;
+  --line-strong:   #404659;
+
+  /* Nav stays "midnight" but even deeper than the page bg */
+  --nav-bg:        #0c0e15;
+  --nav-text:      #ede5d3;
+  --nav-line:      rgba(237, 229, 211, 0.1);
+
+  --focus-ring:    rgba(237, 229, 211, 0.15);
+  --body-glow-1:   rgba(217, 109, 64, 0.04);
+  --body-glow-2:   rgba(237, 229, 211, 0.02);
+}
+
+/* ============================================
+   Base
+   ============================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image:
+    radial-gradient(at 20% 10%, var(--body-glow-1) 0px, transparent 50%),
+    radial-gradient(at 90% 80%, var(--body-glow-2) 0px, transparent 50%);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.15;
+}
+h1 { font-size: 3rem;    font-weight: 400; letter-spacing: -0.03em; }
+h2 { font-size: 2rem;    font-weight: 450; }
+h3 { font-size: 1.375rem; font-weight: 500; }
+h4 { font-size: 1.0625rem; font-weight: 600; font-family: var(--font-body); letter-spacing: 0.005em; }
+
+p { color: var(--ink); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+a:hover { border-bottom-color: var(--accent); }
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* ============================================
+   Layout
+   ============================================ */
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+@media (max-width: 700px) {
+  .container { padding: 0 20px; }
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.625rem; }
+}
+
+hr, .divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 32px 0;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+}
+
+/* ============================================
+   Cards — flat, hairline borders, no shadows
+   ============================================ */
+
+.card {
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(17, 17, 17, 0.04);
+}
+
+.card-flat {
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 24px;
+  border-radius: var(--radius-card);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 11px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  text-decoration: none;
+  line-height: 1;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.btn-primary:hover {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn-secondary:hover {
+  background: var(--bg-deep);
+  border-color: var(--ink-muted);
+}
+
+/* Rust-highlight button for special CTAs */
+.btn-highlight {
+  background: var(--highlight);
+  color: var(--bg);
+  border-color: var(--highlight);
+}
+.btn-highlight:hover {
+  background: var(--highlight-deep);
+  border-color: var(--highlight-deep);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.btn-danger:hover {
+  background: var(--danger);
+  color: var(--bg-alt);
+}
+
+.btn-success {
+  background: var(--success);
+  color: var(--bg);
+  border-color: var(--success);
+}
+.btn-success:hover {
+  background: #1e4030;
+  border-color: #1e4030;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-muted);
+  border-color: transparent;
+  padding: 8px 16px;
+}
+.btn-ghost:hover { color: var(--ink); }
+
+/* ============================================
+   Badges
+   ============================================ */
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+}
+
+.badge-success {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: var(--success);
+}
+.badge-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.badge-warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+  border-color: var(--warning);
+}
+.badge-secondary {
+  background: var(--bg-deep);
+  color: var(--ink-muted);
+  border-color: var(--line-strong);
+}
+
+/* ============================================
+   Forms
+   ============================================ */
+
+.form-group { margin-bottom: 20px; }
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--ink);
+  background: var(--bg-alt);
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* ============================================
+   Alerts
+   ============================================ */
+
+.alert {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  border-left: 3px solid;
+}
+.alert-success {
+  background: var(--success-soft);
+  color: var(--success);
+  border-left-color: var(--success);
+}
+.alert-error {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-left-color: var(--danger);
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  background: var(--bg-alt);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+th {
+  text-align: left;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line-strong);
+  /* color and background intentionally NOT set globally,
+     so tr-level overrides in components apply correctly */
+}
+td {
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  transition: background-color 0.15s ease;
+}
+tbody tr {
+  transition: background-color 0.15s ease;
+}
+tbody tr:hover td {
+  background-color: var(--bg-deep);
+}
+tr:last-child td { border-bottom: none; }
+
+/* ============================================
+   Decorative
+   ============================================ */
+
+.stat-figure {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 3rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-feature-settings: "lnum" 1;
+  color: var(--ink);
+}
+
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0 32px;
+}
+.section-rule::before { content: "—"; color: var(--ink-faint); font-size: 1.2rem; }
+.section-rule h2 { font-size: 1.5rem; }
+.section-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.numeral {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.875rem;
+  margin-right: 12px;
+  font-feature-settings: "onum" 1;
+}
+
+.accent-left  { border-left: 2px solid var(--accent);    padding-left: 16px; }
+.danger-left  { border-left: 2px solid var(--danger);    padding-left: 16px; }
+.warning-left { border-left: 2px solid var(--highlight); padding-left: 16px; }
+
+.text-muted { color: var(--ink-muted); }
+.text-faint { color: var(--ink-faint); }
+.text-sm    { font-size: 0.875rem; }
+.text-xs    { font-size: 0.75rem; }
+.serif      { font-family: var(--font-display); }
